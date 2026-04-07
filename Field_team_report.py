@@ -241,6 +241,11 @@ import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
 
+# ✅ DEBUG START
+st.write("Secrets loaded:", "gcp_service_account" in st.secrets)
+st.write(st.secrets)
+# ✅ DEBUG END
+
 # ---------------------------
 # 🔐 Google Sheets Connection
 # ---------------------------
