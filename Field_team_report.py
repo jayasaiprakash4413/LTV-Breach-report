@@ -21,14 +21,9 @@ scope = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-service_account_info = dict(st.secrets["gcp_service_account"])
-
-# This fixes the \n literal issue
-service_account_info["private_key"] = service_account_info["private_key"].replace("\\n", "\n")
-
+service_account_info = json.loads(st.secrets["gcp_credentials"])
+# service_account_info["private_key"] = service_account_info["private_key"].replace("\\n", "\n")
 creds = Credentials.from_service_account_info(service_account_info, scopes=scope)
-
-
 # creds = Credentials.from_service_account_info(
 #     dict(st.secrets["gcp_service_account"]),
 #     scopes=scope
