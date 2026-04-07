@@ -9,8 +9,8 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 # ✅ DEBUG START
-st.write("Secrets loaded:", "gcp_service_account" in st.secrets)
-st.write(st.secrets)
+# st.write("Secrets loaded:", "gcp_service_account" in st.secrets)
+# st.write(st.secrets)
 # ✅ DEBUG END
 
 # ---------------------------
@@ -21,10 +21,18 @@ scope = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-creds = Credentials.from_service_account_info(
-    dict(st.secrets["gcp_service_account"]),
-    scopes=scope
-)
+service_account_info = dict(st.secrets["gcp_service_account"])
+
+# This fixes the \n literal issue
+service_account_info["private_key"] = service_account_info["private_key"].replace("\\n", "\n")
+
+creds = Credentials.from_service_account_info(service_account_info, scopes=scope)
+
+
+# creds = Credentials.from_service_account_info(
+#     dict(st.secrets["gcp_service_account"]),
+#     scopes=scope
+# )
 client = gspread.authorize(creds)
 
 # ---------------------------
